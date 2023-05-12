@@ -1,7 +1,11 @@
 # Articles Database System
+Simple database system for articles using PouchDB. `
+
+## Contents
+\pouchDbArticles` contains a simple app using this database system. There are also diagrams and a presentation about how the system works.
 
 ## Installation
-- clone this repository
+- clone this repository (or download the contents)
 
 
 ### On Windows:
@@ -15,7 +19,7 @@ export NVM_DIR="/home/yourusername/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 ```
 - install node:  `nvm install node`
-- restart wsl and go again locate this repository in wsl
+- restart wsl and again locate this repository in wsl
 - 
 - -install `pouchdb` using `npm`:
 ```sh
@@ -45,4 +49,4 @@ pouchdb-server start
 ### PouchDB inspection
 - open http://localhost:5984/_utils/#/_all_dbs
 - there you can inspect used databases
-*Note that some databases might not be created yet if you didn't use them in the provided application*
+(*Note that some databases might not be created yet if you didn't use them in the provided application*)
