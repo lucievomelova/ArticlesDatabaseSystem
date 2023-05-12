@@ -4,6 +4,7 @@
 
 ### On Windows:
 - install wsl
+- now run the followin commands in wsl:
 - run `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash`
 - ensure that file `~/.bashsrc` contains the following at the bottom:
 ```sh
@@ -19,16 +20,16 @@ npm install pouchdb-find
 ```
 
 ## Usage
-1. Start `pouchdb` server:
+- clone this repository
+- start `pouchdb` server:
 ```
 pouchdb-server start
 ```
 
-2. Open index page of **Articles Database System**
-
-3. Navigate through the app using links
+- open index page of **Articles Database System**
+- navigate through the app using links
 
 ### PouchDB inspection
-1. Open http://localhost:5984/_utils/#/_all_dbs
-2. There you can inspect used databases
+- open http://localhost:5984/_utils/#/_all_dbs
+- there you can inspect used databases
 *Note that some databases might not be created yet if you didn't use them in the provided application*
