@@ -1,10 +1,13 @@
 # Articles Database System
 
 ## Installation
+- clone this repository
+
 
 ### On Windows:
 - install wsl
-- now run the followin commands in wsl:
+- locate this repository in wsl 
+- now run the following commands in wsl:
 - run `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash`
 - ensure that file `~/.bashsrc` contains the following at the bottom:
 ```sh
@@ -12,21 +15,22 @@ export NVM_DIR="/home/yourusername/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 ```
 - install node:  `nvm install node`
+- restart wsl and go again locate this repository in wsl
+- 
 - -install `pouchdb` using `npm`:
 ```sh
-npm install pouchdb
+npm install pouchdb --save
 npm install -g pouchdb-server
 npm install pouchdb-find
 ```
 
 ## Usage
-- clone this repository
 - start `pouchdb` server:
 ```
 pouchdb-server start
 ```
 
-- open index page of **Articles Database System**
+- open index page of **Articles Database System** *(pouchDbArticles/index.html)*
 - navigate through the app using links
 
 ### PouchDB inspection
