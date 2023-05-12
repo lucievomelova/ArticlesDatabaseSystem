@@ -20,6 +20,4 @@ function displayTotalTime(starttime, endtime, description) {
     time.appendChild(textNode);
 
     document.body.appendChild(time);
-
-
 }
