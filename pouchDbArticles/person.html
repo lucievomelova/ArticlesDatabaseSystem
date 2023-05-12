@@ -48,12 +48,8 @@
             </ul>
          `;
 
-          textNode = document.createTextNode(person.role);
-          p.appendChild(textNode);
-      }).catch(function () {
-          textNode = document.createTextNode("error");
-          p.appendChild(textNode);
-      });
+        textNode = document.createTextNode(person.role);
+        p.appendChild(textNode);
 
       details.appendChild(p);
       const endTime = new Date();

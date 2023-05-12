@@ -5,7 +5,7 @@ function startFooter() {
     textNode = document.createTextNode("Go to main page");
     a.appendChild(textNode);
     a.title = "Link to main page";
-    a.href = "/pouchDbArticles/";
+    a.href = "./index.html";
     document.body.appendChild(line)
     document.body.appendChild(a);
 }

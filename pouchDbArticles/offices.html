@@ -26,7 +26,7 @@
       listItem.innerText = office.name;
       listItem.className = "clickable";
       listItem.addEventListener('click', () => {
-        window.location = window.location.href + './../office.html?id=' + office._id;
+        window.location = './office.html?id=' + office._id;
       });
       list.appendChild(listItem);
     });

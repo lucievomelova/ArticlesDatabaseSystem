@@ -77,7 +77,7 @@
         textNode = document.createTextNode("Go to article page with comments");
         a.appendChild(textNode);
         a.title = "Link to comments";
-        a.href = "/pouchDbArticles/articleWithComments.html?id="+id;
+        a.href = window.location.href.split("?")[0] + './../articleWithComments.html?id='+id;
         document.body.appendChild(a);
 
 

@@ -27,7 +27,7 @@
             listItem.innerText = article.title;
             listItem.className = "clickable";
             listItem.addEventListener('click', () => {
-                window.location = window.location.href + './../article.html?id=' + article._id;
+                window.location = './article.html?id=' + article._id;
             });
             list.appendChild(listItem);
 

@@ -41,7 +41,7 @@
             personInfo.innerHTML = `<p><strong>Contact email: </strong> ${person.contactInfo.email} </p>`;
             personInfo.className = "clickable";
             personInfo.addEventListener('click', () => {
-                window.location = `/pouchDbArticles/personFromEmail.html?email=${person.contactInfo.email}`;
+                window.location = `./personFromEmail.html?email=${person.contactInfo.email}`;
             });
             details.appendChild(personInfo);
         }).catch(function () {

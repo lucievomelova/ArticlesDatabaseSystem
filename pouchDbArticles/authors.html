@@ -27,7 +27,7 @@
             listItem.innerText = author.name;
             listItem.className = "clickable";
             listItem.addEventListener('click', () => {
-                window.location = window.location.href + './../person.html?id=' + author._id;
+                window.location = './person.html?id=' + author._id;
             });
             list.appendChild(listItem);
         });
@@ -40,6 +40,6 @@
     });
 </script>
 <br>
-<a href="/pouchDbArticles/femalesWithArticles.html">List of female authors and their articles</a>
+<a href="./femalesWithArticles.html">List of female authors and their articles</a>
 </body>
 </html>

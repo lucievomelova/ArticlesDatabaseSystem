@@ -28,7 +28,7 @@
         listItem.innerText = reader.name;
         listItem.className = "clickable";
         listItem.addEventListener('click', () => {
-          window.location = window.location.href + './../person.html?id=' + reader._id;
+          window.location = './person.html?id=' + reader._id;
         });
         list.appendChild(listItem);
       });
