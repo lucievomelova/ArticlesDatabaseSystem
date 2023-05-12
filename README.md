@@ -37,6 +37,7 @@ npm install -g pouchdb-server
 npm install pouchdb-find
 ```
 
+
 ## Usage
 - start `pouchdb` server:
 ```
@@ -50,3 +51,14 @@ pouchdb-server start
 - open http://localhost:5984/_utils/#/_all_dbs
 - there you can inspect used databases
 (*Note that some databases might not be created yet if you didn't use them in the provided application*)
+
+
+
+#### If you encounter some problems with pouchdb-server:
+There is a small possibility that pouchdb-server won't work. In that case, you can replace all links to local paths for new database names and work only with temporary databases. Those databases cannot be inspected using Fauxton UI, but the application will still work. 
+- if you encounter problems with pouchdb-server:
+  - open the project in a code editor (like VSCode)
+  - locate folder addToDbB
+    - open all files and replace links in `new PouchDB` in each file with local database names, eg: new PouchDB("http://localhost:5984/articles/") -> new PouchDB("articles")
+  - save all changes
+  - open index.html in browser. Now the application should work as intended
