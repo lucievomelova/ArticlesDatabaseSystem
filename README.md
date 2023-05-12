@@ -2,13 +2,17 @@
 
 ## Installation
 
-1. Install `npm` (with your download manager):
+### On Windows:
+- install wsl
+- run `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash`
+- ensure that file `~/.bashsrc` contains the following at the bottom:
+```sh
+export NVM_DIR="/home/yourusername/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 ```
-sudo apt install npm
-```
-
-2. Install `pouchdb` using `npm`:
-```
+- install node:  `nvm install node`
+- -install `pouchdb` using `npm`:
+```sh
 npm install pouchdb
 npm install pouchdb-server
 npm install pouchdb-find
