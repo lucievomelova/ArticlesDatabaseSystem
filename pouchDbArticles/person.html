@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Person Details</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Person Details</h1>
+<div id="details"></div>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/articleList.js"></script>
+<script src="JsonLists/commentList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="addToDB/addArticles.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+
+<script>
+  // Get the person ID from the URL parameter
+  const url =  new URL(window.location.href);
+  console.log(url);
+  const id = url.searchParams.get("id");
+
+
+  const p = document.createElement('p');
+  const strong = document.createElement('strong');
+  let textNode = document.createTextNode("Role: ");
+  strong.appendChild(textNode);
+  p.appendChild(strong);
+
+  const startTime = new Date();
+  // Retrieve the person details from the database
+  peopleDB.get(id).then(person => {
+      const details = document.getElementById('details');
+      details.innerHTML = `
+            <p><strong>Name:</strong> ${person.name}</p>
+            <p><strong>Date of birth:</strong> ${person.birthDate}</p>
+            <p><strong>Sex:</strong> ${person.sex}</p>
+            <p><strong>Contact info:</strong> </p>
+            <ul>
+                <li>Email: ${person.contactInfo.email} </li>
+                <li>Phone number: ${person.contactInfo.phoneNumber} </li>
+            </ul>
+         `;
+
+          textNode = document.createTextNode(person.role);
+          p.appendChild(textNode);
+      }).catch(function () {
+          textNode = document.createTextNode("error");
+          p.appendChild(textNode);
+      });
+
+      details.appendChild(p);
+      const endTime = new Date();
+      startFooter();
+      displayTotalTime(startTime, endTime, "GET PERSON DETAILS");
+
+
+  }).catch(error => {
+      console.error('Failed to retrieve person details:', error);
+      const details = document.getElementById('details');
+      details.innerHTML = '<p>Error retrieving person details. Please try again later.</p>';
+  });
+
+
+</script>
+</body>
+</html>

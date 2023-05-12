@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Female authors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<ul id="articles"></ul>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<h1>Female authors and their articles:</h1>
+<ul id="femaleAuthors"></ul>
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/articleList.js"></script>
+<script src="JsonLists/commentList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="addToDB/addArticles.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+
+<script>
+    const startTime = new Date();
+
+    peopleDB.find({
+        selector: {
+            "role": "author",
+            sex: 'Female'
+        }
+    }).then(authors => {
+        const list = document.getElementById('femaleAuthors');
+        authors.docs.forEach(author => {
+            const listItem = document.createElement('li');
+            let text = '<strong class= "clickable">' + author.name + '</strong>';
+            listItem.addEventListener('click', () => {
+                window.location = window.location.href + './../person.html?id=' + author._id;
+            });
+
+            // get all articles written by this author (only)
+            articleDB.find({
+                selector: { authorIds: [ author._id ] }
+            }).then(articles => {
+                if(articles.docs.length > 0) {
+                    text += '<ul>'
+                    articles.docs.forEach(article => { text += '<li>' + article.title + '</li>'; });
+                    text += '</ul>';
+                }
+                listItem.innerHTML = text;
+                list.appendChild(listItem);
+            }).catch(function (err) {
+                console.log(err);
+            });
+            // console.log(text);
+
+        });
+        const endTime = new Date();
+        // measure performance
+        startFooter();
+        displayTotalTime(startTime, endTime, "GET ALL FEMALE AUTHORS + THEIR ARTICLES");
+    }).catch(function (err) {
+        console.log(err);
+    });
+
+</script>
+</body>
+</html>
+
+</body>
+</html>

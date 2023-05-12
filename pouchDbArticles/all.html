@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Articles</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .clickable:hover {
+      background-color: lightgray;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<h1>Articles Database System</h1>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<h2>Articles:</h2>
+<ul id="articles"></ul>
+
+<h2>Comments:</h2>
+<ul id="comments"></ul>
+
+<h2>Offices:</h2>
+<ul id="offices"></ul>
+
+<h2>Authors:</h2>
+<ul id="authors"></ul>
+
+<h2>Readers:</h2>
+<ul id="readers"></ul>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/articleList.js"></script>
+<script src="JsonLists/commentList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="addToDB/addArticles.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+<script>
+
+  articleDB.allDocs({ include_docs: true }).then(result => {
+    const articles = result.rows.map(row => row.doc);
+    const list = document.getElementById('articles');
+    articles.forEach(article => {
+      const listItem = document.createElement('li');
+      listItem.innerText = article.title;
+      listItem.className = "clickable";
+      listItem.addEventListener('click', () => {
+        window.location = window.location.href + '/../article.html?id=' + article._id;
+      });
+      list.appendChild(listItem);
+
+    });
+  });
+
+  commentsDB.allDocs({ include_docs: true }).then(result => {
+    const comments = result.rows.map(row => row.doc);
+    const list = document.getElementById('comments');
+    comments.forEach(comment => {
+      const listItem = document.createElement('li');
+      listItem.innerText = comment.text;
+      list.appendChild(listItem);
+    });
+  });
+
+
+  officesDB.allDocs({ include_docs: true }).then(result => {
+    const offices = result.rows.map(row => row.doc);
+    const list = document.getElementById('offices');
+    offices.forEach(office => {
+      const listItem = document.createElement('li');
+      listItem.innerText = office.name;
+      listItem.className = "clickable";
+      listItem.addEventListener('click', () => {
+        window.location = window.location.href + '/../office.html?id=' + office._id;
+      });
+      list.appendChild(listItem);
+    });
+  });
+
+
+
+  peopleDB.find({
+    selector: {"role": "author"}
+  }).then(authors => {
+    const list = document.getElementById('authors');
+    authors.docs.forEach(author => {
+      const listItem = document.createElement('li');
+      listItem.innerText = author.name;
+      listItem.className = "clickable";
+      listItem.addEventListener('click', () => {
+        window.location = window.location.href + './../person.html?id=' + author._id;
+      });
+      list.appendChild(listItem);
+    });
+  }).catch(function (err) {
+    console.log(err);
+  });
+
+  peopleDB.find({
+    selector: {"role": "reader"}
+  }).then(readers => {
+    const list = document.getElementById('readers');
+    readers.docs.forEach(reader => {
+      const listItem = document.createElement('li');
+      listItem.innerText = reader.name;
+      listItem.className = "clickable";
+      listItem.addEventListener('click', () => {
+        window.location = window.location.href + './../person.html?id=' + author._id;
+      });
+      list.appendChild(listItem);
+    });
+  }).catch(function (err) {
+    console.log(err);
+  });
+
+
+</script>
+</body>
+</html>

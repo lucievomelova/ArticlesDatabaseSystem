@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Person Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Branch Office</h1>
+<div id="details"></div>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/articleList.js"></script>
+<script src="JsonLists/commentList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="addToDB/addArticles.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+
+<script>
+    const personInfo = document.createElement('div');
+    // Get the person ID from the URL parameter
+    const url =  new URL(window.location.href);
+    console.log(url);
+    const id = url.searchParams.get("id");
+
+    const startTime = new Date();
+    // Retrieve the person details from the database
+    officesDB.get(id).then(office => {
+        const details = document.getElementById('details');
+        details.innerHTML = `
+            <p><strong>Name:</strong> ${office.name}</p>
+            <p><strong>Address:</strong> ${office.address}</p>
+         `;
+
+        peopleDB.get(office.contactPersonId).then(person => {
+            console.log(person);
+            personInfo.innerHTML = `<p><strong>Contact email: </strong> ${person.contactInfo.email} </p>`;
+            personInfo.className = "clickable";
+            personInfo.addEventListener('click', () => {
+                window.location = `/pouchDbArticles/personFromEmail.html?email=${person.contactInfo.email}`;
+            });
+            details.appendChild(personInfo);
+        }).catch(function () {
+        });
+
+        const endTime = new Date();
+        startFooter();
+        displayTotalTime(startTime, endTime, "GET BRANCH OFFICE DETAILS");
+
+    }).catch(error => {
+        console.error('Failed to retrieve person details:', error);
+        const details = document.getElementById('details');
+        details.innerHTML = '<p>Error retrieving person details. Please try again later.</p>';
+    });
+
+
+</script>
+</body>
+</html>

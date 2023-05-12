@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contact person</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Contact person</h1>
+<div id="contactPerson"></div>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="measurePerformance.js"></script>
+
+<script>
+    const url =  new URL(window.location.href);
+    console.log(url);
+    const email = url.searchParams.get("email");
+
+    const startTime = new Date();
+
+    peopleDB.find({
+        selector: {contactInfo: {email: email} }
+    })
+        .then(person => {
+        const contactPerson = document.getElementById('contactPerson');
+
+        if(person.size > 1)
+            contactPerson.innerHTML = `<p>DB error - email should be unique</p>`
+        else {
+            contactPerson.innerHTML = `
+            <p><strong>Name:</strong> ${person.docs[0].name}</p>
+            <p><strong>Date of birth:</strong> ${person.docs[0].birthDate}</p>
+            <p><strong>Sex:</strong> ${person.docs[0].sex}</p>
+            <p><strong>Contact info:</strong> </p>
+            <ul>
+                <li>Email: ${person.docs[0].contactInfo.email} </li>
+                <li>Phone number: ${person.docs[0].contactInfo.phoneNumber} </li>
+            </ul>
+         `;
+        }
+
+        // measure performance
+        const endTime = new Date();
+        startFooter();
+        displayTotalTime(startTime, endTime, "GET PERSON BASED ON EMAIL");
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+</script>
+</body>
+</html>
+
+</body>
+</html>

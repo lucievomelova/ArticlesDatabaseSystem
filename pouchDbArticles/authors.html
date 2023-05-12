@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<h1>Authors:</h1>
+<ul id="authors"></ul>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="measurePerformance.js"></script>
+<script>
+    const startTime = new Date();
+    peopleDB.find({
+        selector: {"role": "author"}
+    }).then(authors => {
+        const list = document.getElementById('authors');
+        authors.docs.forEach(author => {
+            const listItem = document.createElement('li');
+            listItem.innerText = author.name;
+            listItem.className = "clickable";
+            listItem.addEventListener('click', () => {
+                window.location = window.location.href + './../person.html?id=' + author._id;
+            });
+            list.appendChild(listItem);
+        });
+        const endTime = new Date();
+        // measure performance
+        startFooter();
+        displayTotalTime(startTime, endTime, "GET ALL AUTHORS");
+    }).catch(function (err) {
+        console.log(err);
+    });
+</script>
+<br>
+<a href="/pouchDbArticles/femalesWithArticles.html">List of female authors and their articles</a>
+</body>
+</html>

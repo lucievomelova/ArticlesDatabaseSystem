@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Readers</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<h1>Readers:</h1>
+<ul id="readers"></ul>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="measurePerformance.js"></script>
+<script>
+
+    const startTime = new Date();
+    peopleDB.find({
+      selector: {"role": "reader" }
+    }).then(readers => {
+      const list = document.getElementById('readers');
+      readers.docs.forEach(reader => {
+        const listItem = document.createElement('li');
+        listItem.innerText = reader.name;
+        listItem.className = "clickable";
+        listItem.addEventListener('click', () => {
+          window.location = window.location.href + './../person.html?id=' + reader._id;
+        });
+        list.appendChild(listItem);
+      });
+
+      const endTime = new Date();
+      // measure performance
+      startFooter();
+      displayTotalTime(startTime, endTime, "GET ALL READERS");
+
+    }).catch(function (err) {
+      console.log(err);
+    });
+
+</script>
+</body>
+</html>

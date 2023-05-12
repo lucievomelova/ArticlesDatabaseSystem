@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Article</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="article"></div>
+
+<p><strong>Authors:</strong></p>
+<ul id="authorName"></ul>
+
+
+<h2>Comments:</h2>
+<div id="comments"></div>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/articleList.js"></script>
+<script src="JsonLists/commentList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="addToDB/addArticles.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+
+<script>
+    // Display article
+    const url =  new URL(window.location.href);
+    const id = url.searchParams.get("id");
+
+    let startTime = new Date();
+    articleDB.get(id).then(article => {
+        const articleDiv = document.getElementById('article');
+
+        const articleHeader = document.createElement('h1');
+        let textNode = document.createTextNode(article.title);
+        articleHeader.appendChild(textNode);
+        articleDiv.appendChild(articleHeader);
+
+
+        const introText = document.createElement('article');
+        introText.className = 'introText';
+        textNode = document.createTextNode(article.intro);
+        introText.appendChild(textNode);
+        articleDiv.appendChild(introText);
+
+
+        const articleText = document.createElement('article');
+        textNode = document.createTextNode(article.body);
+        articleText.appendChild(textNode);
+        articleDiv.appendChild(articleText);
+
+        const authorList = document.getElementById('authorName');
+        peopleDB.find({
+            selector: {
+                role: "author",
+                _id: {$in: article.authorIds} }
+        }).then(authors => {
+            authors.docs.forEach(author => {
+                const li = document.createElement('li');
+                textNode = document.createTextNode(author.name);
+                li.appendChild(textNode);
+                authorList.appendChild(li);
+            });
+        }).catch(function (err) {
+            console.log(err);
+        });
+
+        const dateText = document.createElement('p');
+        textNode = document.createTextNode("Publication date: " + article.publicationDate);
+        dateText.appendChild(textNode);
+        articleDiv.appendChild(dateText);
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+
+    //Display comments
+    commentsDB.find({
+        selector: { "articleId": id}
+        }).then(comments => {
+            comments.docs.forEach(comment => {
+                const commentHeader = document.createElement('strong');
+                const commentsDiv = document.getElementById('comments');
+
+                peopleDB.get(comment.authorId).then(commentAuthor => {
+                    console.log(commentAuthor);
+                    let textNode = document.createTextNode("On " + comment.date +
+                        " user " + commentAuthor.name + " wrote:\n");
+                    commentHeader.appendChild(textNode);
+                    commentsDiv.appendChild(commentHeader);
+
+                    const p = document.createElement('p');
+
+                    textNode = document.createTextNode(comment.text);
+                    p.appendChild(textNode);
+                    p.appendChild(textNode);
+                    commentsDiv.appendChild(p);
+                }).catch(error => {
+                    console.error('Failed to retrieve person details:', error);
+                    const details = document.getElementById('details');
+                    details.innerHTML = '<p>Error retrieving person details. Please try again later.</p>';
+                });
+            });
+
+            const endTime = new Date();
+            startFooter();
+            displayTotalTime(startTime, endTime, "GET ALL COMMENTS FOR ARTICLE WITH ID " + id);
+        }).catch(function (err) {
+            console.log(err);
+    });
+
+
+</script>
+</body>
+</html>
+
+</body>
+</html>

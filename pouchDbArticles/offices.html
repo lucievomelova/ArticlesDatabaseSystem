@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Offices</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<h1>Branch offices:</h1>
+<ul id="offices"></ul>
+
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="measurePerformance.js"></script>
+<script>
+  const startTime = new Date();
+  officesDB.allDocs({ include_docs: true }).then(result => {
+    const offices = result.rows.map(row => row.doc);
+    const list = document.getElementById('offices');
+    offices.forEach(office => {
+      const listItem = document.createElement('li');
+      listItem.innerText = office.name;
+      listItem.className = "clickable";
+      listItem.addEventListener('click', () => {
+        window.location = window.location.href + './../office.html?id=' + office._id;
+      });
+      list.appendChild(listItem);
+    });
+    const endTime = new Date();
+
+    // measure performance
+    startFooter();
+    displayTotalTime(startTime, endTime, "GET ALL OFFICES");
+  });
+
+
+</script>
+</body>
+</html>

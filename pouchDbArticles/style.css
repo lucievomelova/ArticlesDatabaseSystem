@@ -1,0 +1,39 @@
+body {
+    font-family: "DejaVu Sans";
+    background-color: aliceblue;
+}
+
+.introText {
+    font-style: italic;
+}
+
+.time {
+    font-style: italic;
+    font-size: smaller;
+    color: grey;
+}
+
+hr {
+    color: grey;
+}
+
+
+.clickable:hover {
+    background-color: lightgray;
+}
+
+body {
+    align-content: center;
+    position: relative;
+    left: 10%;
+    top: 50px;
+    width: 1000px;
+    min-width: 400px;
+}
+
+
+article {
+    font-size: larger;
+}
+
+

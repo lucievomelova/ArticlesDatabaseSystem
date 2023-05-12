@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Article</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="articleBody"></div>
+
+<p><strong>Authors:</strong></p>
+<ul id="authorName2"></ul>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<script src="JsonLists/peopleList.js"></script>
+<script src="JsonLists/articleList.js"></script>
+<script src="JsonLists/commentList.js"></script>
+<script src="JsonLists/branchOfficesList.js"></script>
+<script src="addToDB/addPeople.js"></script>
+<script src="addToDB/addOffices.js"></script>
+<script src="addToDB/addArticles.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+
+<script>
+    // Display article
+    const url =  new URL(window.location.href);
+    const id = url.searchParams.get("id");
+
+    const startTime = new Date();
+
+    articleDB.get(id).then(article => {
+        const articleDiv = document.getElementById('articleBody');
+
+
+        const articleHeader = document.createElement('h1');
+        let textNode = document.createTextNode(article.title);
+        articleHeader.appendChild(textNode);
+        articleDiv.appendChild(articleHeader);
+
+
+        const introText = document.createElement('article');
+        introText.className = 'introText';
+        textNode = document.createTextNode(article.intro);
+        introText.appendChild(textNode);
+        articleDiv.appendChild(introText);
+
+
+        const articleText = document.createElement('article');
+        textNode = document.createTextNode(article.body);
+        articleText.appendChild(textNode);
+        articleDiv.appendChild(articleText);
+
+        const authorList = document.getElementById('authorName2');
+        peopleDB.find({
+            selector: { role: "author", _id: {$in: article.authorIds} }
+        }).then(authors => {
+            authors.docs.forEach(author => {
+                const li = document.createElement('li');
+                textNode = document.createTextNode(author.name);
+                li.appendChild(textNode);
+                authorList.appendChild(li);
+            });
+        }).catch(function (err) {
+            console.log(err);
+        });
+
+        const dateText = document.createElement('p');
+        textNode = document.createTextNode("Publication date: " + article.publicationDate);
+        dateText.appendChild(textNode);
+        articleDiv.appendChild(dateText);
+
+
+        const a = document.createElement('a');
+        textNode = document.createTextNode("Go to article page with comments");
+        a.appendChild(textNode);
+        a.title = "Link to comments";
+        a.href = "/pouchDbArticles/articleWithComments.html?id="+id;
+        document.body.appendChild(a);
+
+
+        const endTime = new Date();
+
+        startFooter();
+        displayTotalTime(startTime, endTime, "GET ARTICLE CONTENT");
+
+    }).catch(function (err) {
+        console.log(err);
+    });
+
+
+
+</script>
+</body>
+</html>

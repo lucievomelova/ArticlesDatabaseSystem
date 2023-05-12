@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.min.js"></script>
+<script src="https://unpkg.com/pouchdb@7.2.2/dist/pouchdb.find.min.js"></script>
+
+<h1>Comments:</h1>
+<ul id="comments"></ul>
+
+
+<script src="JsonLists/commentList.js"></script>
+<script src="addToDB/addComments.js"></script>
+<script src="measurePerformance.js"></script>
+<script>
+    const startTime = new Date();
+    commentsDB.allDocs({ include_docs: true }).then(result => {
+        const comments = result.rows.map(row => row.doc);
+        const list = document.getElementById('comments');
+        comments.forEach(comment => {
+            const listItem = document.createElement('li');
+            listItem.innerText = comment.text;
+            list.appendChild(listItem);
+        });
+
+        const endTime = new Date();
+        // measure performance
+        startFooter();
+        displayTotalTime(startTime, endTime, "GET ALL COMMENTS");
+    });
+
+</script>
+</body>
+</html>
