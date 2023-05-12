@@ -20,7 +20,7 @@ export NVM_DIR="/home/yourusername/.nvm"
 ```
 - install node:  `nvm install node`
 - restart wsl and again locate this repository in wsl
-- 
+
 - -install `pouchdb` using `npm`:
 ```sh
 npm install pouchdb --save
