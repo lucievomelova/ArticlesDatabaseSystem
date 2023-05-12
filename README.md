@@ -14,7 +14,7 @@ export NVM_DIR="/home/yourusername/.nvm"
 - -install `pouchdb` using `npm`:
 ```sh
 npm install pouchdb
-npm install pouchdb-server
+npm install -g pouchdb-server
 npm install pouchdb-find
 ```
 
