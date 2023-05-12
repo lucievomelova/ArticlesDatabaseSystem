@@ -6,11 +6,11 @@
 - the less documents are in the database, the faster the bulk operation is
 
 ## Get article content
-- measuerd time ~ 750ms
+- measured time ~ 750ms
 - somewhat complex query
 
 ## Get article content +  all related comments
-- measuerd time ~ 1000ms
+- measured time ~ 1000ms
 - complex query
 
 ## Get all authors/readers
