@@ -1,8 +1,8 @@
 # Articles Database System
-Simple database system for articles using PouchDB. `
+Simple database system for Articles using PouchDB. Handles Articles, Comments, People (Authors and Readers) and Branch Offices.
 
 ## Contents
-\pouchDbArticles` contains a simple app using this database system. There are also diagrams and a presentation about how the system works.
+`\pouchDbArticles` contains a simple app using this database system. There are also diagrams and a presentation about how the system works.
 
 ## Installation
 - clone this repository (or download the contents)
